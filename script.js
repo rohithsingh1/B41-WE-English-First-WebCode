@@ -1,6 +1,6 @@
 let SignInButton=document.getElementById('SignInButton')
 var YOUR_CLIENT_ID='427638762174-p83o7vg71glf6486slhmt9r8sti2uk8l.apps.googleusercontent.com';
-var YOUR_REDIRECT_URI='https://b41-we-first-webcode.netlify.app/oauth2callback';
+var YOUR_REDIRECT_URI='https://b41-we-first-webcode.netlify.app/oauth2callback/';
 
 SignInButton.addEventListener('click', function() {
   trySampleRequest();  
