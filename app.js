@@ -17,6 +17,7 @@ app.get('/', function(req, res) {
   //res.sendFile('index.html');
 });
 app.get('/oauth2callback', function(req, res) {
+  console.log('rediredted!!!!!');
   res.redirect('/home.html')
     //res.sendFile(path.join(__dirname+'/home.html'));
 })
