@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your YouTube Channel Data</title>
+    <script src="https://kit.fontawesome.com/f75ee6d0ef.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,900;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand" role="presentation">
+                <i class="fa-solid fa-video"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav nav nav-pills me-auto mb-2 mb-md-0" id="pills-tab" role="tablist">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">User Data</a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation">
+                                <a class="dropdown-item active" href="#" id="pills-ChannelInfo-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-ChannelInfo" role="tab" aria-controls="pills-ChannelInfo"
+                                    aria-selected="true">Channel Info</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-UsersPlaylists-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-UsersPlaylists" role="tab" aria-controls="pills-UsersPlaylists"
+                                    aria-selected="false">Users Playlists</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">User Subscribtions/Activities</a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-UserSubscription-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-UserSubscription" role="tab" aria-controls="pills-UserSubscription"
+                                    aria-selected="false">UserSubscriptions</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-UserActivites-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-UserActivites" role="tab" aria-controls="pills-UserActivites"
+                                    aria-selected="false">User Activites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Search</a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-TopicBasedSearch-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-TopicBasedSearch" role="tab" aria-controls="pills-TopicBasedSearch"
+                                    aria-selected="false">Search</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-TopicBasedPlaylistSearch-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-TopicBasedPlaylistSearch" role="tab" aria-controls="pills-TopicBasedPlaylistSearch"
+                                    aria-selected="false">Playlist Search</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#" id="pills-CreatePlaylist-tab" data-bs-toggle="pill" data-bs-target="#pills-CreatePlaylist" role="tab"
+                            aria-controls="pills-CreatePlaylist" aria-selected="false">Create Playlist</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- <nav class="navbar fixed-top navbar-expand-lg bg-dark" id="navbarID" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand" role="presentation">
+                <i class="fa-solid fa-video"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav nav nav-pills me-auto mb-2 mb-md-0" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#ChannelInfoDiv" id="pills-ChannelInfo-tab">ChannelInfo</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#UsersPlaylistsDiv" id="pills-UsersPlaylists-tab">Playlists</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#UsersSubscriptionsDiv" id="pills-UsersPlaylists-tab">Subscriptions</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-Top250Movies-tab">Top 250 movies</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-item" href="#" id="pills-Top250TvShows-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-Top250TvShows" role="tab" aria-controls="pills-Top250TvShows"
+                                    aria-selected="false">Top 250 TvShows</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2 bg-dark" data-bs-theme="dark" type="text" id="SearchMovieInput"
+                        placeholder="Search Movie" aria-label="Search" required>
+                    <button class="btn btn-outline-success" type="button" id="SearchMovieButton">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav> -->
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="pills-ChannelInfo-tab"
+            tabindex="0" id="pills-ChannelInfo">
+            <div class="container-fluid">
+                <h2>Channel Info</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="ChannelInfoDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-UsersPlaylists" role="tabpanel" aria-labelledby="pills-UsersPlaylists-tab"
+            tabindex="0">
+            <div class="container-fluid">
+                <h2>Users Playlists</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersPlaylistsDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-UserSubscription" role="tabpanel" aria-labelledby="pills-UserSubscription-tab"
+            tabindex="0">
+            <div class="container-fluid">
+                <h2>Channels Subscribed to</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersSubscriptionsDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-UserActivites" role="tabpanel" aria-labelledby="pills-UserActivites-tab" tabindex="0">
+            <div class="container-fluid">
+                <h2>Channel Activities</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersChannelActivityDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-TopicBasedSearch" role="tabpanel" tabindex="0" aria-labelledby="pills-TopicBasedSearch-tab">
+            <div class="container-fluid">
+                <h2>Topic Based Search</h2>
+                <div class="row">
+                    <div class="col-8">
+                            <input type="text" placeholder="Search..." class="form-control" id="TopicBasedSearchInput" required>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" id="TopicBasedSearchButton">Submit</button>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="TopicBasedSearchDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-TopicBasedPlaylistSearch" role="tabpanel" tabindex="0" aria-labelledby="pills-TopicBasedPlaylistSearch-tab">
+            <div class="container-fluid">
+                <h2>Topic Based Playlist Search</h2>
+                <div class="row">
+                    <div class="col-8">
+                        <input type="text" placeholder="Search playlist..." class="form-control" id="TopicBasedPlaylistSearchInput" required>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" id="TopicBasedPlaylistSearchButton">Submit</button>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="TopicBasedPlaylistSearchDiv">
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade show" id="pills-CreatePlaylist" role="tabpanel" tabindex="0" aria-labelledby="pills-CreatePlaylist-tab">
+            <div class="container-fluid">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersPlaylistModify">
+                    <div>
+                        <h2> Create Playlist </h2>
+                        <form id="playlist-create">
+                            <div class="mb-3">
+                                <label for="CreatePlaylistTitleLabel" class="form-label">Playlist Title</label>
+                                <input type="text" name="playlist-title" class="form-control" id="CreatePlaylistTitleLabel" placeholder="Enter playlist title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="CreatePlaylistDesLabel" class="form-label">Password</label>
+                                <input type="text" name="playlist-description" class="form-control" id="CreatePlaylistDesLabel" placeholder="enter Playlist Description">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="script2.js"></script>
+</body>
+</html>

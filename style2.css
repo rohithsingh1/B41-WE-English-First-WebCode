@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,900;1,400&display=swap');
+
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+.navbar-toggler {
+    background-color: whitesmoke;
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+div.col.my-2{
+    margin: auto;
+    width: 36%;
+}
+
+#ChannelInfoDiv h2{
+    display: block !important;
+}
+.card {
+    padding: 0px;
+    width: fit-content;
+}
+
+.card img {
+    margin-top: 0px !important;
+    height: 12rem;
+    margin: auto;
+    width: 12rem;
+}
+
+.card-body {
+    padding: 0.3rem 0px 0px 0px;
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+#UsersPlaylistModify{
+    display: none;
+}
+
+li button{
+    margin: auto !important;
+}
+
+
+
