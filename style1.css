@@ -1,3 +1,12 @@
 .col-12.d-flex{
     height: 100vh;
 }
+
+
+div.row{
+    background-image: url('/images/youtube-image-2.jpeg');
+    background-position: center;
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
