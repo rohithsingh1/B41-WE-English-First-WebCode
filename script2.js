@@ -13,7 +13,7 @@ if(Object.keys(params).length>0) {
     localStorage.setItem('oauth2-test-params', JSON.stringify(params));
 }
 
-let ApiKey='AIzaSyCUlcrP5_l1rFjtQ1R9t7NlZQ0mk66FPYs';
+let ApiKey='AIzaSyDXE82uTxUA2O9Vk6Gehwt5zKNySUjwA_w';
 
 
 /* 
