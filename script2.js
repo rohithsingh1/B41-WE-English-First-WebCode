@@ -65,22 +65,50 @@ const renderChannelInfo=(data) => {
     ChannelInfoDiv.innerHTML='';
     data.map((element) => {
         let colDiv=document.createElement('div');
-        colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card h-100">
-                            <img src=${element.snippet.thumbnails.medium.url} class="card-img-top rounded my-1" alt='${element.snippet.title}'>
-                            <div class="card-body text-center">
-                                <h5 class="card-title">${element.snippet.title}</h5>
-                                ${element.snippet.description!==""? `<p class="card-text">${element.snippet.description}</p>`:''}
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>ChannelID</span> : ${element.id}</li>
-                                    <li class="list-group-item"><span>CustomUrl</span> : ${element.snippet.customUrl}</li>
-                                    <li class="list-group-item"><span>PublishedAt</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>Subscribers</span> : ${element.statistics.subscriberCount}</li>
-                                    <li class="list-group-item"><span>VideoCount</span> : ${element.statistics.videoCount}</li>
-                                    <li class="list-group-item"><span>VideoCount</span> : ${element.statistics.viewCount}</li>
-                                </ul>
+        colDiv.classList.add('col-12', 'my-2');
+        colDiv.innerHTML = ` <div class="card mb-3 bg-dark cardChannelInfoDiv">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                        <img src="${element.snippet.thumbnails.medium.url}"
+                                            class="img-fluid rounded-start rounded-end" alt='${element.snippet.title}'>
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h2 class="card-title">${element.snippet.title}</h2>
+                                        <div class="card-text table-responsive">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">ChannelID</th>
+                                                        <td>${element.id}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">CustomUrl</th>
+                                                        <td>${element.snippet.customUrl}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Join At</th>
+                                                        <td>${new Date(element.snippet.publishedAt).toLocaleString().split(',')[0]}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Subscribers</th>
+                                                        <td>${element.statistics.subscriberCount}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">VideoCount</th>
+                                                        <td>${element.statistics.videoCount}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">ViewCount</th>
+                                                        <td>${element.statistics.viewCount}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>`;
+                        </div>`
         ChannelInfoDiv.append(colDiv);
     })
 }
@@ -94,6 +122,7 @@ const renderChannelInfo=(data) => {
 
 
 let UserPlaylistsArray=[];
+let UserPlaylistsItemsArray = []
 let pillsUsersPlaylistsTab=document.getElementById('pills-UsersPlaylists-tab');
 
 // user's youtube channel playlists are display on the webpage
@@ -121,39 +150,71 @@ const fetchUserPlaylists=async (channelID) => {
     console.log('UserPlaylists = ', result);
 }
 
+
 //below function takes user's playlist data
 // and displays on the webpage
 const renderUserPlaylists=(data) => {
     let UsersPlaylistsDiv=document.getElementById('UsersPlaylistsDiv');
     UsersPlaylistsDiv.innerHTML='';
-    data.map((element,playListIndex) => {
+    data.map(async (element, playListIndex) => {
+            let params=JSON.parse(localStorage.getItem('oauth2-test-params'));
+            const url=`https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&playlistId=${element.id}&key=${ApiKey}`;
+            // fetching the user's youtube channel playlist data
+            const response=await fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${params['access_token']}`,
+                    Accept: "application/json"
+                }
+            })
+            //converting the response to json format
+            let result=await response.json();
+            // storing the result into an array for futher use
+        let playlistObj=await result.items.find((ele) => {
+            return ele.snippet.playlistId === element.id
+        })
         let colDiv=document.createElement('div');
         colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card text-center">
-                        <img src=${element.snippet.thumbnails.medium.url} class="card-img-top" alt=${element.snippet.title}>
-                        <div class="card-body">
-                            <h5 class="card-title" id="card-title-${element.id}">${element.snippet.title}</h5>
-                            <input class="form-control" style="display:none;" id="playlist-title-input-${element.id}" value="${element.snippet.title}" >
-                             <input class="form-control" style="display:none;" id="playlist-desc-input-${element.id}" value="${element.snippet.description}">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>PlaylistID</span> : ${element.id}</li>
-                                    <li class="list-group-item"><span>PublishedAt</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>PlaylistContent</span> : ${element.contentDetails.itemCount}</li>
-                                     <li class="list-group-item">
-                                        <button class="btn btn-primary" id="edit-${element.id}" onclick="startEditPlayList('${element.id}')">Edit</button>
-                                     </li>
-                                      <li class="list-group-item">
-                                        <button class="btn btn-danger" id="delete-${element.id}" onclick="deletePlayList('${element.id}')">Delete</button>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <button class="btn btn-secondary" id="cancel-${element.id}" style="display:none;" onclick="cancelEditPlayList('${element.id}')">Cancel</button>
-                                      </li>
-                                      <li class="list-group-item">
-                                        <button class="btn btn-success" id="save-${element.id}" style="display:none;" onclick="updatePlayList('${element.id}', ${playListIndex})">Save</button>
-                                      </li>
-                                </ul>
-                        </div>
-                    </div>`;
+        colDiv.innerHTML=`<div class="card bg-dark">
+                            <a href="https://www.youtube.com/watch?v=${playlistObj?.snippet.resourceId.videoId}&list=${element?.id}&start_radio=1" target="_blank">
+                                <img src="${element?.snippet.thumbnails.medium.url}" class="card-img-top" alt=${element.snippet.title}>
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title" id="card-title-${element.id}">${element.snippet.title}</h5>
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="card-subtitle mb-2">Content:${element?.contentDetails.itemCount}</h6>
+                                    <h6 class="card-subtitle mb-2">Date:${new Date(element?.snippet.publishedAt).toLocaleString().split(',')[0]}</h6>
+                                </div>
+                                <div class="d-flex justify-content-around mb-2">
+                                    <button type="button" id="edit-${element.id}" data-bs-toggle="modal" data-bs-target="#PlaylistEditModal" onclick="startEditPlayList('${element.id}',${playListIndex},'${element.snippet.title}','${element.snippet.description}')" class="btn btn-outline-primary btn-sm">Edit</button>
+                                    <button type="button" id="delete-${element.id}" onclick="deletePlayList('${element.id}')" class="btn btn-outline-danger btn-sm">Delete</button>
+                                </div>
+                            </div>
+                        </div>`;
+        // colDiv.innerHTML=`<div class="card text-center">
+        //                 <img src=${element.snippet.thumbnails.medium.url} class="card-img-top" alt=${element.snippet.title}>
+        //                 <div class="card-body">
+        //                     <h5 class="card-title" id="card-title-${element.id}">${element.snippet.title}</h5>
+        //                     <input class="form-control" style="display:none;" id="playlist-title-input-${element.id}" value="${element.snippet.title}" >
+        //                      <input class="form-control" style="display:none;" id="playlist-desc-input-${element.id}" value="${element.snippet.description}">
+        //                         <ul class="list-group list-group-flush">
+        //                             <li class="list-group-item"><span>PlaylistID</span> : ${element.id}</li>
+        //                             <li class="list-group-item"><span>PublishedAt</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
+        //                             <li class="list-group-item"><span>PlaylistContent</span> : ${element.contentDetails.itemCount}</li>
+        //                              <li class="list-group-item">
+        //                                 <button class="btn btn-primary" id="edit-${element.id}" onclick="startEditPlayList('${element.id}')">Edit</button>
+        //                              </li>
+        //                               <li class="list-group-item">
+        //                                 <button class="btn btn-danger" id="delete-${element.id}" onclick="deletePlayList('${element.id}')">Delete</button>
+        //                               </li>
+        //                               <li class="list-group-item">
+        //                                 <button class="btn btn-secondary" style="display:none;" id="cancel-${element.id}" onclick="cancelEditPlayList('${element.id}')">Cancel</button>
+        //                               </li>
+        //                               <li class="list-group-item">
+        //                                 <button class="btn btn-success" style="display:none;" id="save-${element.id}" onclick="updatePlayList('${element.id}', ${playListIndex})">Save</button>
+        //                               </li>
+        //                         </ul>
+        //                 </div>
+        //             </div>`;
         UsersPlaylistsDiv.append(colDiv);
     })
 }
@@ -200,19 +261,20 @@ const renderUserSubScriptions=(data) => {
     let UsersSubscriptionsDiv=document.getElementById('UsersSubscriptionsDiv');
     UsersSubscriptionsDiv.innerHTML='';
     data.map((element) => {
+        let title=element.snippet.title
         let colDiv=document.createElement('div');
         colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card text-center">
-                        <img src=${element.snippet.thumbnails.medium.url} class="card-img-top" alt=${element.snippet.title}>
-                        <div class="card-body">
-                            <h5 class="card-title">${element.snippet.title}</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>ChannelID</span> : ${element.snippet.resourceId?.channelId}</li>
-                                    <li class="list-group-item"><span>Subscribed Date</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>TotalItemCount</span> : ${element.contentDetails.totalItemCount}</li>
-                                </ul>
-                        </div>
-                    </div>`;
+        colDiv.innerHTML = ` <div class="card bg-dark cardSubscriptionDiv" >
+                            <a href="https://www.youtube.com/@${title.split(' ').join('')}" target="_blank">
+                                <img src="${element.snippet.thumbnails.medium.url}" class="card-img-top"
+                                    alt='${element.snippet.title}'>
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${element.snippet.title}</h5>
+                                    <h6 class="card-subtitle mb-2">Content:${element.contentDetails.totalItemCount}</h6>
+                                    <h6 class="card-subtitle mb-2">Date:${new Date(element.snippet.publishedAt).toLocaleString().split(',')[0]}</h6>
+                            </div>
+                        </div>`
         UsersSubscriptionsDiv.append(colDiv);
     })
 }
@@ -263,17 +325,15 @@ const renderUserActivity=(data) => {
     data.map((element) => {
         let colDiv=document.createElement('div');
         colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card text-center">
-                        <img src='${element.snippet.thumbnails.medium.url}' class="card-img-top" alt='${element.snippet.channelTitle}'>
-                        <div class="card-body">
-                            <h5 class="card-title">${element.snippet.channelTitle}</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>ChannelID</span> : ${element.contentDetails.subscription.resourceId.channelId}</li>
-                                    <li class="list-group-item"><span>Activity Date</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>Activity Type</span> : ${element.snippet.type}</li>
-                                </ul>
-                        </div>
-                    </div>`;
+        colDiv.innerHTML = ` <div class="card bg-dark cardActivityDiv">
+                                <img src="${element.snippet.thumbnails.medium.url}"
+                                    class="card-img-top" alt=${element.snippet.channelTitle}>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${element.snippet.channelTitle}</h5>
+                                <h6 class="card-subtitle mb-2">Date:${new Date(element.snippet.publishedAt).toLocaleString().split(',')[0]}</h6>
+                                <h6 class="card-subtitle mb-2">Type: ${element.snippet.type}</h6>
+                            </div>
+                        </div>`
         UsersChannelActivityDiv.append(colDiv);
     })
 }
@@ -336,17 +396,24 @@ const renderTopicBasedSearch=(data) => {
     TopicBasedSearchDiv.innerHTML='';
     data.map((element) => {
         let colDiv=document.createElement('div');
-        colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">${element.snippet.title}</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>VideoID</span> : ${element.id.videoId}</li>
-                                    <li class="list-group-item"><span>Published Date</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>ChannelID</span> : ${element.snippet.channelId}</li>
-                                </ul>
-                        </div>
-                    </div>`;
+        colDiv.classList.add('col-12', 'my-2');
+        colDiv.innerHTML = `<div class="card mb-3 bg-dark cardSearchDiv">
+                            <div class="row g-0">
+                                <div class="col-4">
+                                    <a href="https://www.youtube.com/watch?v=${element.id.videoId}" target="_blank">
+                                    <img src="${element.snippet.thumbnails.medium.url}"
+                                        class="img-fluid rounded-start rounded-end" alt='${element.snippet.title}'>
+                                    </a>
+                                    </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${element.snippet.title}</h5>
+                                        <h6 class="card-subtitle mb-2">Date:${new Date(element.snippet.publishedAt).toLocaleString().split(',')[0]}</h6>
+                                        <h6 class="card-subtitle mb-2">111456 views</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
         TopicBasedSearchDiv.append(colDiv);
     })
 }
@@ -356,7 +423,7 @@ const renderTopicBasedSearch=(data) => {
 /* 
 =================================== Reterive topic based playlist search Information ===================================================
 */
-
+let TopicBasedSearchPlaylistArray2 = []
 let TopicBasedSearchPlaylistArray=[];
 let pillsTopicBasedPlaylistSearchTab=document.getElementById('pills-TopicBasedPlaylistSearch-tab');
 let TopicBasedPlaylistSearchInput=document.getElementById('TopicBasedPlaylistSearchInput');
@@ -401,26 +468,64 @@ const fetchTopicBasedPlaylistSearch=async (querySearch) => {
     renderTopicBasedPlaylistSearch(TopicBasedSearchPlaylistArray);
 }
 
+const fetchUserPlaylistsSearchItems=async (PlaylistId) => {
+    let params=JSON.parse(localStorage.getItem('oauth2-test-params'));
+    const url=`https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&playlistId=${PlaylistId}&key=${ApiKey}`;
+     // fetching the user's youtube channel playlist data
+    const response=await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${params['access_token']}`,
+            Accept: "application/json"
+        }
+    })
+    //converting the response to json format
+    let result=await response.json();
+    // storing the result into an array for futher use
+    TopicBasedSearchPlaylistArray2 = [...result.items];
+    console.log('UserPlaylistsItem = ', TopicBasedSearchPlaylistArray2);
+}
 /*
     below function takes the playlists inforamtion and
     dispaly's in the web page
 */
-const renderTopicBasedPlaylistSearch=(data) => {
+const renderTopicBasedPlaylistSearch=async(data) => {
     let TopicBasedPlaylistSearchDiv=document.getElementById('TopicBasedPlaylistSearchDiv');
     TopicBasedPlaylistSearchDiv.innerHTML='';
-    data.map((element) => {
+    data.map(async(element, playListIndex) => {
+            let params=JSON.parse(localStorage.getItem('oauth2-test-params'));
+            const url=`https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&playlistId=${element.id.playlistId}&key=${ApiKey}`;
+            // fetching the user's youtube channel playlist data
+            const response=await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${params['access_token']}`,
+                Accept: "application/json"
+            }
+        })
+        //converting the response to json format
+        let result=await response.json();
+        const playlistObj= await result.items.find((ele) => {
+            return ele.snippet.playlistId === element.id.playlistId
+        })
+        console.log('playlistObj = ',playlistObj)
         let colDiv=document.createElement('div');
-        colDiv.classList.add('col', 'my-2');
-        colDiv.innerHTML=`<div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">${element.snippet.title}</h5>
-                            <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span>PlaylistID</span> : ${element.id.playlistId}</li>
-                                    <li class="list-group-item"><span>Published Date</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}</li>
-                                    <li class="list-group-item"><span>ChannelID</span> : ${element.snippet.channelId}</li>
-                                </ul>
-                        </div>
-                    </div>`;
+        colDiv.classList.add('col-12', 'my-2');
+        colDiv.innerHTML = ` <div class="card mb-3 bg-dark cardPlaylistSearchDiv">
+                            <div class="row g-0">
+                                <div class="col-4">
+                                    <a href="https://www.youtube.com/watch?v=${playlistObj?.snippet?.resourceId?.videoId}&list=${element.id.playlistId}&start_radio=1" target="_blank">
+                                        <img src="${element.snippet.thumbnails.medium.url}"
+                                            class="img-fluid rounded-start rounded-end" alt='${element.snippet.title}'>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${element.snippet.title}</h5>
+                                        <h6 class="card-subtitle mb-2">Date:${new Date(element.snippet.publishedAt).toLocaleString().split(',')[0]}</h6>
+                                        <h6 class="card-subtitle mb-2">111456 views</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
         TopicBasedPlaylistSearchDiv.append(colDiv);
     })
 }
@@ -478,49 +583,41 @@ PlayListCreateForm.addEventListener('submit', async e => {
     displayCreatedPlaylist();
     renderUserPlaylists(UserPlaylistsArray);
 })
-
+let editingPlaylistId = null
 /*
     below function is used to edit the details of a particular playlist 
 */
-const startEditPlayList = elementId => {
-    togglePlayListUpdate(elementId, true);
+const startEditPlayList = (elementId,elementIdIndex, elementTitle,elementDesc,) => {
+    //playlistData(elementTitle,elementDesc)
+    editingPlaylistId = elementId
     resetPlayListInputValues(elementId);
+}
+
+
+
+function submitPlaylistData() {
+    updatePlayList(editingPlaylistId)
 }
 
 /*
     below function is used to revoke the updated playlist info and display the previous playlist info
 */
 const cancelEditPlayList = elementId => {
-    togglePlayListUpdate(elementId);
+    //togglePlayListUpdate(elementId);
     resetPlayListInputValues(elementId);
 }
 
 /*
     below function is used to toggle between the edit, delete and save , cancel buttons
 */
-const togglePlayListUpdate = (elementId, edit) => {
-    const editEle=document.querySelector(`#edit-${elementId}`);
-    const deleteEle=document.querySelector(`#delete-${elementId}`);
-    const cancelEle=document.querySelector(`#cancel-${elementId}`);
-    const saveEle=document.querySelector(`#save-${elementId}`);
-    const playListTitle=document.querySelector(`#card-title-${elementId}`);
-    const playListTitleInput=document.querySelector(`#playlist-title-input-${elementId}`);
-    const playListDescInput=document.querySelector(`#playlist-desc-input-${elementId}`);
-    editEle.style.display=edit? 'none':'block';
-    deleteEle.style.display=edit? 'none':'block';
-    cancelEle.style.display=edit? 'block':'none';
-    saveEle.style.display=edit? 'block':'none';
-    playListTitle.style.display=edit? 'none':'block';
-    playListTitleInput.style.display=edit? 'block':'none';
-    playListDescInput.style.display=edit? 'block':'none';
-}
+
 
 /*
     below function is used to reset the playlist infotmation
 */
 const resetPlayListInputValues = elementId => {
-    const playListTitleInput=document.querySelector(`#playlist-title-input-${elementId}`);
-    const playListDescInput=document.querySelector(`#playlist-desc-input-${elementId}`);
+    const playListTitleInput=document.querySelector(`#playlistTitle`);
+    const playListDescInput=document.querySelector(`#playlistDesc`);
     const playListObj=UserPlaylistsArray.find((playList) => playList.id===elementId);
     playListTitleInput.value=playListObj.snippet.title;
     playListDescInput.value=playListObj.snippet.description;
@@ -551,12 +648,14 @@ const createPlayList = async (channelId, playListData) => {
 /*
     below function is used to update the details of existing playlist information
 */
-const updatePlayList = async (playListId, playListIndex) => {
-    const playListTitleInput=document.querySelector(`#playlist-title-input-${playListId}`);
-    const playListDescInput=document.querySelector(`#playlist-desc-input-${playListId}`);
+const updatePlayList=async (playListId) => {
+    let PlaylistEditModalId=document.getElementById('PlaylistEditModal');
+    const playListTitleInput=document.querySelector(`#playlistTitle`);
+    const playListDescInput=document.querySelector(`#playlistDesc`);
     const updatedTitle = playListTitleInput.value;
-    const updatedDescription = playListDescInput.value;
-    togglePlayListUpdate(playListId);
+    const updatedDescription=playListDescInput.value;
+    //PlaylistEditModalId.classList.remove('show');
+    //PlaylistEditModalId.style.display="none";
     let params=JSON.parse(localStorage.getItem('oauth2-test-params'));
     const url=`https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails%2Cplayer%2Cid&channelId=${ChannelID}&key=${ApiKey}`;
     // sends the put request along with the updated details of a particular playlist
@@ -576,7 +675,11 @@ const updatePlayList = async (playListId, playListIndex) => {
     })
     // converts the response to json format and stores into an array
     const result=await response.json();
-    UserPlaylistsArray[playListIndex] = result;
+    const playlistIndex=await UserPlaylistsArray.findIndex((ele) => {
+        return ele.id === playListId
+    })
+    UserPlaylistsArray[playlistIndex]=result;
+    editingPlaylistId = null
     renderUserPlaylists(UserPlaylistsArray);
 }
 

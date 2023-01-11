@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input class="form-control" style="display:none;" id="playlist-title-input-${element.id}"
+        value="${element.snippet.title}">
+    <input class="form-control" style="display:none;" id="playlist-desc-input-${element.id}"
+        value="${element.snippet.description}">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><span>PlaylistID</span> : ${element.id}</li>
+        <li class="list-group-item"><span>PublishedAt</span> : ${new Date(element.snippet.publishedAt).toLocaleString()}
+        </li>
+        <li class="list-group-item"><span>PlaylistContent</span> : ${element.contentDetails.itemCount}</li>
+        <li class="list-group-item">
+            <button class="btn btn-primary" id="edit-${element.id}"
+                onclick="startEditPlayList('${element.id}')">Edit</button>
+        </li>
+        <li class="list-group-item">
+            <button class="btn btn-danger" id="delete-${element.id}"
+                onclick="deletePlayList('${element.id}')">Delete</button>
+        </li>
+        <li class="list-group-item">
+            <button class="btn btn-secondary" id="cancel-${element.id}" style="display:none;"
+                onclick="cancelEditPlayList('${element.id}')">Cancel</button>
+        </li>
+        <li class="list-group-item">
+            <button class="btn btn-success" id="save-${element.id}" style="display:none;"
+                onclick="updatePlayList('${element.id}', ${playListIndex})">Save</button>
+        </li>
+    </ul>
+</body>
+</html>

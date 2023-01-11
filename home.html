@@ -19,7 +19,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="style2.css">
 </head>
-<body>
+<body class="bg-dark text-white">
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a href="#" class="navbar-brand" role="presentation">
@@ -80,7 +80,7 @@
                         </ul>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="#" id="pills-CreatePlaylist-tab" data-bs-toggle="pill" data-bs-target="#pills-CreatePlaylist" role="tab"
+                        <a class="nav-link" href="#"  id="pills-CreatePlaylist-tab" data-bs-toggle="pill" data-bs-target="#pills-CreatePlaylist" role="tab"
                             aria-controls="pills-CreatePlaylist" aria-selected="false">Create Playlist</a>
                     </li>
                 </ul>
@@ -90,62 +90,90 @@
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="pills-ChannelInfo-tab"
             tabindex="0" id="pills-ChannelInfo">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark text-white">
                 <h2>Channel Info</h2>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="ChannelInfoDiv">
+                <div class="row" id="ChannelInfoDiv">
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-UsersPlaylists" role="tabpanel" aria-labelledby="pills-UsersPlaylists-tab"
             tabindex="0">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark">
                 <h2>Users Playlists</h2>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersPlaylistsDiv">
+                <div class="modal fade" id="PlaylistEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="PlaylistEditLabel" aria-hidden="true">
+                    <div class="modal-dialog bg-dark">
+                        <div class="modal-content bg-dark">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="PlaylistEditLabel">Modal title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="playlistTitle" class="col-form-label">Title:</label>
+                                        <input type="text" class="form-control" id="playlistTitle" placeholder="playlist Title">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="playlistDesc" class="col-form-label">Description:</label>
+                                        <textarea class="form-control" id="playlistDesc" placeholder="playlist description"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="closeButton" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" onclick="submitPlaylistData()"
+                                    id="submitButton">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4" id="UsersPlaylistsDiv">
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-UserSubscription" role="tabpanel" aria-labelledby="pills-UserSubscription-tab"
             tabindex="0">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark">
                 <h2>Channels Subscribed to</h2>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersSubscriptionsDiv">
+                <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4" id="UsersSubscriptionsDiv">
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-UserActivites" role="tabpanel" aria-labelledby="pills-UserActivites-tab" tabindex="0">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark">
                 <h2>Channel Activities</h2>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="UsersChannelActivityDiv">
+                <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4" id="UsersChannelActivityDiv">
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-TopicBasedSearch" role="tabpanel" tabindex="0" aria-labelledby="pills-TopicBasedSearch-tab">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark text-white">
                 <h2>Topic Based Search</h2>
-                <div class="row">
-                    <div class="col-8">
+                <div class="row mb-3">
+                    <div class="col-6">
                             <input type="text" placeholder="Search..." class="form-control" id="TopicBasedSearchInput" required>
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-primary" id="TopicBasedSearchButton">Submit</button>
                     </div>
                 </div>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="TopicBasedSearchDiv">
+                <div class="row" id="TopicBasedSearchDiv">
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="pills-TopicBasedPlaylistSearch" role="tabpanel" tabindex="0" aria-labelledby="pills-TopicBasedPlaylistSearch-tab">
-            <div class="container-fluid">
+            <div class="container-fluid bg-dark text-white">
                 <h2>Topic Based Playlist Search</h2>
-                <div class="row">
-                    <div class="col-8">
+                <div class="row mb-3">
+                    <div class="col-6">
                         <input type="text" placeholder="Search playlist..." class="form-control" id="TopicBasedPlaylistSearchInput" required>
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-primary" id="TopicBasedPlaylistSearchButton">Submit</button>
                     </div>
                 </div>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="TopicBasedPlaylistSearchDiv">
+                <div class="row" id="TopicBasedPlaylistSearchDiv">
                 </div>
             </div>
         </div>
@@ -175,5 +203,13 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="script2.js"></script>
+    <!-- <script>
+        let playlistTitleInput = document.getElementById('playlistTitle')
+        let playlistDescInput = document.getElementById('playlistDesc')
+        function playlistData(title,desc){
+            playlistTitleInput.value = title
+            playlistDescInput.value = desc
+        }
+    </script> -->
 </body>
 </html>

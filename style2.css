@@ -12,41 +12,192 @@
 .nav-pills .nav-link.active {
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
-div.col.my-2{
-    margin: auto;
-    width: 36%;
-}
+
 
 #ChannelInfoDiv h2{
     display: block !important;
 }
-.card {
+
+#ChannelInfoDiv{
+    margin: 0px;
+}
+
+#ChannelInfoDiv .col-12{
+    padding: 0px !important;
+}
+
+#ChannelInfoDiv .card{
+    border: none;
+    cursor: pointer;
+    box-shadow:none !important;
+    height: 12rem !important;
     padding: 0px;
-    width: fit-content;
+    width: 100% !important;
+    color: white;
+}
+
+#ChannelInfoDiv .col-md-4{
+    width: fit-content !important;
+}
+
+#ChannelInfoDiv img{
+    height: fit-content !important;
+    margin: auto !important;
+}
+
+#ChannelInfoDiv .col{
+    margin-left: 0.7rem !important;
+}
+
+.row-cols-2>* {
+    height: fit-content;
+}
+
+#pills-UsersPlaylists{
+    color: white;
+}
+.card {
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 0.9rem 0.1rem #57606f;
+    height: 83%;
+    padding: 0px;
+    width: 95%;
+    color: white;
 }
 
 .card img {
     margin-top: 0px !important;
-    height: 12rem;
+    height: 10rem;
     margin: auto;
-    width: 12rem;
 }
 
 .card-body {
     padding: 0.3rem 0px 0px 0px;
 }
 
-.card-title {
-    font-weight: 700;
+.card h5.card-title {
+    margin-left: 0.3rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.1;
+}
+.card-body h6.card-subtitle{
+    display: inline-block;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+.table {
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.table th {
+    padding: 0px !important;
+}
+
+.table td {
+    padding: 0px !important;
+    text-align: center;
+    font-weight: 600;
 }
 
 #UsersPlaylistModify{
     display: none;
 }
 
-li button{
+
+
+#UsersSubscriptionsDiv .cardSubscriptionDiv{
+    border: none !important;
+    cursor: pointer !important;
+    height: 83% !important;
+    padding: 0px !important;
+    width: 80% !important;
+    color: white !important;
+    box-shadow: none;
+}
+
+#UsersSubscriptionsDiv a{
     margin: auto !important;
 }
 
+#UsersSubscriptionsDiv .card img {
+    margin-top: 0px !important;
+    height: 8rem !important;
+    margin: auto !important;
+    border-radius: 50% !important;
+    width: fit-content !important;
+}
+
+#UsersChannelActivityDiv .cardActivityDiv{
+    border: none !important;
+        cursor: pointer !important;
+        height: 83% !important;
+        padding: 0px !important;
+        width: 80% !important;
+        color: white !important;
+        box-shadow: none;
+}
+
+#UsersChannelActivityDiv .card img {
+    margin-top: 0px !important;
+    height: 8rem !important;
+    margin: auto !important;
+    border-radius: 50% !important;
+    width: fit-content !important;
+}
+
+#TopicBasedSearchDiv .cardSearchDiv,#TopicBasedPlaylistSearchDiv .cardPlaylistSearchDiv{
+    border: none !important;
+    cursor: pointer !important;
+    height: fit-content !important;
+    padding: 0px !important;
+    width: 100% !important;
+    color: white !important;
+    box-shadow: none;
+}
+
+#TopicBasedSearchDiv .cardSearchDiv .col-4,#TopicBasedPlaylistSearchDiv .cardPlaylistSearchDiv .col-4{
+    width: fit-content;
+}
+
+#TopicBasedSearchDiv .cardSearchDiv .col,#TopicBasedPlaylistSearchDiv .cardPlaylistSearchDiv .col{
+    margin-left: 0.9rem !important;
+    margin-right: 0.8rem !important;
+}
+
+#TopicBasedSearchDiv .cardSearchDiv h6.card-subtitle,#TopicBasedPlaylistSearchDiv .cardPlaylistSearchDiv h6.card-subtitle {
+    display: inline-block;
+    margin-left: 0.3rem !important;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+@media (max-width:685px){
+    #ChannelInfoDiv .col-md-4 {
+        width: 100% !important;
+        display: flex !important;
+    }
+    #ChannelInfoDiv h2 {
+        text-align: center;
+    }
+}
+
+@media (min-width: 768px){
+    .row-cols-md-3>* {
+        height: fit-content;
+    }
+}
+
+
+@media (max-width:649px) {
+    div.col.my-2 {
+        margin: 0.5rem auto !important;
+        width: fit-content !important;
+    }
+}
 
 
